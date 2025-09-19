@@ -1,0 +1,126 @@
+.crossword-container {
+ display: flex;
+ flex-direction: column;
+align-items: center;
+padding: 20px;
+font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.crossword-title {
+ font-size: 28px;
+ font-weight: bold;
+ margin-bottom: 25px;
+ color: #2c3e50;
+text-align: center;
+}
+
+.grid-and-questions {
+   display: flex;
+ width: 100%;
+max-width: 1200px;
+gap: 30px;
+justify-content: center;
+align-items: flex-start;
+}
+
+.grid {
+flex: 3; 
+display: flex;
+flex-direction: column;
+gap: 4px;
+margin-top: 60px; 
+}
+
+.row {
+display: flex;
+gap: 4px;
+}
+
+.cell-container {
+    position: relative;
+    width: 52px; 
+    height: 52px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cell-container span {
+    position: absolute;
+    top: 2px;
+    left: 2px; 
+    font-size: 10px; 
+    font-weight: bold;
+    color: #333; 
+    z-index: 1;
+}
+
+.grid input {
+  width: 100%; 
+ height: 100%; 
+ text-align: center;
+ font-size: 22px;
+border-radius: 6px;
+border: 1px solid #b0b0b0;
+outline: none;
+font-weight: bold;
+transition: all 0.2s ease-in-out;
+ padding-top: 15px;
+ box-sizing: border-box; 
+}
+
+.emptyCell {
+background-color: #ffe0b2;
+border: 1px solid #ffb74d;
+}
+
+.filledCell {
+background-color: #26a69a;
+ border: 1px solid #00796b;
+color: #004d40;
+}
+
+.grid input:focus {
+border: 2px solid #004d40;
+background-color: #4db6ac;
+}
+
+.questions {
+flex: 1.2;
+display: flex;
+flex-direction: column;
+gap: 0px;
+font-size: 17px;
+color: black;
+}
+
+.questions h2 {
+ margin-bottom: 5px;
+ color: #1a237e;
+ border-bottom: 2px solid #0288d1;
+ padding-bottom: 4px;
+ text-align: center;
+}
+
+.questions ul {
+ list-style: none;
+padding: 0;
+ margin: 0;
+}
+
+.questions li {
+margin-bottom: 8px;
+line-height: 1.35;
+}
+.score {
+  font-size: 24px;
+  font-weight: bold;
+  color: #1a237e; 
+  margin-top: 20px;
+  text-align: center;
+  padding: 10px 20px;
+  border: 2px solid #00796b;
+  border-radius: 8px;
+  background-color: #e0f2f1;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
