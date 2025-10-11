@@ -10,6 +10,9 @@ export const regeneration=()=>{
     }
 
  const randomQA=shuffledQA.slice(0,20);
+  
+ 
+ 
 
 randomQA.sort((a, b) => b.answer.length - a.answer.length);
 
