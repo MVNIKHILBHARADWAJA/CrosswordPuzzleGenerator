@@ -69,7 +69,7 @@ const checkFeasibility = (start, end, common, currentAnswerDirection, currentAns
             if (common - 1 >= 0 && crossword[common - 1][start] !== ' ') {
                 return false;
             }
-            if (common + 1 < 10 && crossword[common + 1][start] !== ' ') {
+            if (common + 1 < crossword.length && crossword[common + 1][start] !== ' ') {
                 return false;
             }
         }
@@ -251,7 +251,7 @@ let cols = 10;
 for (let i = 0; i < rows; i++) {
   crossword[i] = []; 
   for (let j = 0; j < cols; j++) {
-    crossword[i][j] = ' '; 
+    crossword[i][j] = " "; 
   }
 }
 
@@ -277,6 +277,7 @@ else{
     for (let i = 0; i < firstAns.length; i++)
     {
         crossword[i][5] = firstAns[i];
+
     }
     storedQA.push(new StoredAnsInfo(firstAns,randomQA[0].question,0,5,'d'));
    placedCounters.vertically++;
@@ -289,10 +290,11 @@ const questionNumbersMap = {};
     });
 
 
-
+ 
 return {
   crosswordGrid:crossword,
   storedQA:storedQA,
   questionNumbersMap:questionNumbersMap
 }
+
 }

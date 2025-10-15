@@ -4,14 +4,64 @@ import "./crossword.css";
 const Crossword = () => {
   const inputRefs = useRef([]);
    const [puzzledata,setPuzzledata]=useState(crosswordregeneration());
+   const [answersShown, setanswersShown] = useState(null);
    let {crosswordGrid,storedQA,questionNumbersMap}=puzzledata;
+    console.log(storedQA);
    const [Score, setScore] = useState(null);
    const [cellStatus, setCellStatus] = useState(
   Array(10).fill(null).map(() => Array(10).fill(null))
 );
    const [userGrid, setUserGrid] = useState(() => {
-  return Array(10).fill(null).map(() => Array(10).fill(''));
+  return Array(10).fill(null).map(() => Array(10).fill(""));
 });
+
+ let [storedGrid, setStoredGrid] = useState(() => {
+  return Array(10).fill(null).map(() => Array(10).fill(""));
+});
+
+ const handleUserAnswers= async()=>{
+ 
+setUserGrid(storedGrid);
+ setanswersShown(false);
+
+ }
+
+const handleAnswers = async ()=>{
+  const newuserGrid=Array(10).fill(null).map(() => Array(10).fill(""));
+
+storedQA.forEach((QA)=>{
+ 
+  for(let i=0;i<QA.answer.length;i++)
+    {  
+       if(QA.direction=='a')
+    {     
+      
+      newuserGrid[QA.x][QA.y+i] = QA.answer[i] ;
+      
+       
+    }
+    if(QA.direction=='d')
+    {
+      
+  newuserGrid[QA.x+i][QA.y] = QA.answer[i];
+      
+
+      }   
+
+
+
+    }
+    
+
+})
+
+setanswersShown(true);
+setCellStatus(storedGrid);
+setStoredGrid(userGrid);
+setUserGrid(newuserGrid);
+
+
+}
 
 
 
@@ -27,10 +77,12 @@ const handleSubmit=async ()=>{
     {  
        if(QA.direction=='a')
     {
-      if(userGrid[QA.x][QA.y+i]!=QA.answer[i])
-      {
-         flag=false;  
+      if(userGrid[QA.x][QA.y+i]!==QA.answer[i])
+        {  
+         flag=false; 
+          
          break;
+
       }
       }
       if(QA.direction=='d')
@@ -47,19 +99,19 @@ const handleSubmit=async ()=>{
     {   
         if(QA.direction=='a')
     {
-       if(newCellStatus[QA.x][QA.y+i]!=true){
+        
+
+
+      
   newCellStatus[QA.x][QA.y+i] = flag;
-       }
-  
-
-
-
+      
+       
     }
     if(QA.direction=='d')
     {
-      if(newCellStatus[QA.x+i][QA.y]!=true){
+     
   newCellStatus[QA.x+i][QA.y] = flag;
-  }
+      
 
       }     
   }
@@ -122,6 +174,7 @@ const regenerate=()=>{
   setCellStatus(Array(10).fill(null).map(() => Array(10).fill(null)));
   inputRefs.current = newPuzzle.crosswordGrid.map(
     () => Array(newPuzzle.crosswordGrid[0].length).fill(null));
+    setanswersShown(null);
 }
 
   return (
@@ -135,6 +188,7 @@ const regenerate=()=>{
       {row.map((cell, cellIndex) => {
        
         const isEmpty = cell === ' ';
+      
       const number=questionNumbersMap[`${rowIndex}-${cellIndex}`]
         return (
           <div  key={`${rowIndex}-${cellIndex}`} className='cell-container'>
@@ -142,7 +196,7 @@ const regenerate=()=>{
           <input
            
             type='text'
-            maxLength='1'
+            maxLength={cell.length}
             value={userGrid[rowIndex][cellIndex]}
             className={`${isEmpty ? "emptyCell" : "filledCell"} ${
   cellStatus[rowIndex][cellIndex] === true ? "true" : 
@@ -152,7 +206,7 @@ const regenerate=()=>{
             disabled={isEmpty}
             onChange={(e) => {
   const newUserGrid = [...userGrid.map(row => [...row])];
-  newUserGrid[rowIndex][cellIndex] = e.target.value.toUpperCase();
+  newUserGrid[rowIndex][cellIndex] = e.target.value;
   setUserGrid(newUserGrid);
 }}
 ref={(el) => {
@@ -199,8 +253,11 @@ onKeyDown={(e)=>arrowKeysHandler(e,rowIndex,cellIndex)}
   </div>
 </div>
 <div className="cta-buttons">
-<button onClick={handleSubmit} className='Submit'> Submit </button>
+{answersShown==null?<button onClick={handleSubmit} className='Submit'> Submit </button>:<p></p>}
 <button onClick={regenerate} className='regenerate'> Regenerate </button>
+{answersShown!=true ?
+<button onClick={handleAnswers} className='Submit'>Show Answers</button>: <button onClick={handleUserAnswers} className='Submit'>Show User Answers</button> }
+
 </div>
 {Score!==null && <p className="score"> Score:{Score}</p>}
   </div>    
