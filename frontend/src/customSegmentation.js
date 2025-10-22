@@ -1,10 +1,35 @@
-const consonants = "కఖగఘఙచఛజఝఞటఠడఢణతథదధనపఫబభమయరలవశషసహళ";
-const vowels = "అఆఇఈఉఊఋౠఎఏఐఒఓఔ";
-const vowelSigns = "ాిీుూృౄెేైొోౌౢౣ";
-const modifiers = "ంః";
-const virama = "్"; 
+const teluguConsonants = "కఖగఘఙచఛజఝఞటఠడఢణతథదధనపఫబభమయరలవశషసహళ";
+const teluguVowels = "అఆఇఈఉఊఋౠఎఏఐఒఓఔ";
+const teluguVowelSigns = "ాిీుూృౄెేైొోౌౢౣ";
+const teluguModifiers = "ంః";
+const teluguVirama = "్";
 
-export const segmentation= (answer)=>{
+const hindiConsonants = "कखगघङचछजझञटठडढणतथदधनपफबभमयरलवशषसह";
+const hindiVowels = "अआइईउऊऋॠएऐओऔ";
+const hindiVowelSigns = "ािीुूृॄेैोौॢॣ";
+const hindiModifiers = "ंःँ";
+const hindiVirama = "्";
+
+
+export const segmentation= (language,answer)=>{
+    let consonants,vowels,vowelSigns,modifiers,virama;
+    if(language=="hindi")
+    {
+       consonants=hindiConsonants;
+      vowels=hindiVowels;
+        vowelSigns=hindiVowelSigns;
+       modifiers=hindiModifiers;
+       virama=hindiVirama;
+    }
+    if(language=="telugu")
+    {       
+       consonants=teluguConsonants;
+      vowels=teluguVowels;
+        vowelSigns=teluguVowelSigns;
+       modifiers=teluguModifiers;
+       virama=teluguVirama;
+    }
+    
     let answerLetters=[];
  let str="";
  for(let i=0;i<answer.length;i++)
@@ -48,6 +73,7 @@ if(consonants.includes(ch))
  
 
 return answerLetters;
- }
+
+}
 
 

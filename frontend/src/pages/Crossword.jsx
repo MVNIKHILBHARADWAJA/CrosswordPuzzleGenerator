@@ -3,7 +3,8 @@ import { crosswordregeneration } from '../logic';
 import "./crossword.css";
 const Crossword = () => {
   const inputRefs = useRef([]);
-   const [puzzledata,setPuzzledata]=useState(crosswordregeneration());
+  const [Language, setLanguage] = useState("english");
+   const [puzzledata,setPuzzledata]=useState(crosswordregeneration("english"));
    const [answersShown, setanswersShown] = useState(null);
    let {crosswordGrid,storedQA,questionNumbersMap}=puzzledata;
     console.log(storedQA);
@@ -11,13 +12,27 @@ const Crossword = () => {
    const [cellStatus, setCellStatus] = useState(
   Array(10).fill(null).map(() => Array(10).fill(null))
 );
+
    const [userGrid, setUserGrid] = useState(() => {
   return Array(10).fill(null).map(() => Array(10).fill(""));
 });
 
+
  let [storedGrid, setStoredGrid] = useState(() => {
   return Array(10).fill(null).map(() => Array(10).fill(""));
 });
+
+useEffect(() => {
+    const newPuzzle = crosswordregeneration(Language);
+    setPuzzledata(newPuzzle);
+    setScore(null);
+    setUserGrid(Array(10).fill(null).map(() => Array(10).fill("")));
+    setCellStatus(Array(10).fill(null).map(() => Array(10).fill(null)));
+    inputRefs.current = newPuzzle.crosswordGrid.map(
+      () => Array(newPuzzle.crosswordGrid[0].length).fill(null)
+    );
+    setanswersShown(null);
+  }, [Language]);
 
  const handleUserAnswers= async()=>{
  
@@ -167,7 +182,7 @@ if (inputRefs.current[nextRow] && inputRefs.current[nextRow][nextCol]) {
 
 
 const regenerate=()=>{
-    const newPuzzle=crosswordregeneration();
+    const newPuzzle=crosswordregeneration(Language);
   setPuzzledata(newPuzzle);
   setScore(null);
   setUserGrid(Array(10).fill(null).map(() => Array(10).fill('')));
@@ -175,12 +190,18 @@ const regenerate=()=>{
   inputRefs.current = newPuzzle.crosswordGrid.map(
     () => Array(newPuzzle.crosswordGrid[0].length).fill(null));
     setanswersShown(null);
+  
 }
 
   return (
 <>
 <div className='crossword-container'>
   <div className='crossword-title'>Crossword Puzzle Generator</div>
+  <select name="langauge"  onChange={(e)=>{setLanguage(e.target.value)}} >
+    <option value="hindi">Hindi</option>
+    <option value="telugu">Telugu</option>
+    <option value="english" selected>English</option>
+  </select>
   <div className='grid-and-questions'>
 <div className='grid'>
   {crosswordGrid.map((row, rowIndex) => (
@@ -206,7 +227,8 @@ const regenerate=()=>{
             disabled={isEmpty}
             onChange={(e) => {
   const newUserGrid = [...userGrid.map(row => [...row])];
-  newUserGrid[rowIndex][cellIndex] = e.target.value;
+  
+  newUserGrid[rowIndex][cellIndex] = Language=="english"? e.target.value.toUpperCase():e.target.value;
   setUserGrid(newUserGrid);
 }}
 ref={(el) => {

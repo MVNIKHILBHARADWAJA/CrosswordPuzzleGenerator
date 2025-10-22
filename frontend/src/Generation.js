@@ -1,6 +1,7 @@
-import qa from "./data";
+import data from "./data";
   import { segmentation } from "./customSegmentation";
-export const regeneration=()=>{
+export const regeneration=(Language)=>{
+        let qa=data(Language);
   const shuffledQA=[...qa];
     for(let i=qa.length-1;i>0;i--)
     {
@@ -14,7 +15,17 @@ export const regeneration=()=>{
  const randomQA=[];
   for(let i=0;i<shuffledQA20.length;i++)
   {  const question=shuffledQA20[i].question;
-    const answer=segmentation(shuffledQA20[i].answer);
+    let answer;
+    if(Language!=="english")
+    {
+     answer=segmentation(Language,shuffledQA20[i].answer);
+    }
+    else
+    {
+       answer=shuffledQA20[i].answer;
+    }
+
+    
       randomQA.push({question,answer});
   }
 

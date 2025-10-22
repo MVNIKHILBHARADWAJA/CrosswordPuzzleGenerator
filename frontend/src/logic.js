@@ -242,7 +242,7 @@ const fitting = (randomQA, storedQA, crossword,placedCounters) => {
   }
 };
   
-export const crosswordregeneration=()=>{
+export const crosswordregeneration=(Language)=>{
     let storedQA=[];
   let crossword = [];
 let rows = 10;
@@ -261,7 +261,7 @@ let placedCounters = {
 };
 
 
-const randomQA=regeneration();
+const randomQA=regeneration(Language);
 
 let firstAns=randomQA[0].answer;
 if(Math.random()>=0.5)
