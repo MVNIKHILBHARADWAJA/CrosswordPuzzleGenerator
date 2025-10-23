@@ -3,10 +3,14 @@ import mongoose from "mongoose";
 import cors from "cors";
 import userRoutes from "./routes/userroutes.js"
 import cookieParser from "cookie-parser";
+import dotenv from "dotenv";
+dotenv.config();
+
+
 
 let app=express();
 
-app.use(cookieParser("1234"))
+app.use(cookieParser(`${process.env.COOKIE_PARSER_KEY}`));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cors({   
@@ -18,7 +22,7 @@ app.use(cors({
 app.use("/",userRoutes);
 
  async function main() {
-await mongoose.connect("mongodb+srv://mvnikhilbharadwaja_db_user:XThA8xMwKnMhZjcc@cluster0.dpojvne.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
+await mongoose.connect(`${process.env.MONGODB_URL}`);
  }
 
  main()

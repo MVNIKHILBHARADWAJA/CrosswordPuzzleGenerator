@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
 
- const secret="1234";
+ const secret=`${process.env.COOKIE_PARSER_KEY}`;
 
  export const tokenGeneration=(userPayload)=>{
 
