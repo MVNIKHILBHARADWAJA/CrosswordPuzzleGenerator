@@ -1,6 +1,8 @@
+import jwt from "jsonwebtoken"
 import { tokenGeneration, verifyToken } from "../jwt.js";
 import User from "../models/userModel.js";
 import bcrypt from "bcrypt"
+import nodemailer from "nodemailer";
 export const signUp= async (req,res)=>{
  
     try
@@ -101,5 +103,116 @@ catch(err)
 {
     return res.status(500).json({message:err.message});
 }
+}
+
+export const forgotPassword=async (req,res)=>{
+
+    const {email}=req.body;
+      
+    if(!email)
+    { console.log(email);
+        return res.status(400).json({message:"Email invalid"});
+    }
+    
+    let existedUser=await User.findOne({email:email});
+    if(!existedUser)
+    {
+        return res.status(404).json({message:"User not found with this email"})
+    }
+    
+    const resetToken=jwt.sign({email:email,purpose:"reset password"},process.env.RESET_SECRET,{ expiresIn: "10m" });
+
+    
+
+    
+
+
+
+
+
+    const transporter=nodemailer.createTransport({
+        service:"gmail",
+        auth:{
+            user:process.env.SENDER_Email,
+            pass:process.env.APP_PASSWORD_FOR_MAILS
+
+        }
+    })
+
+
+    const mailOptions={
+        from:process.env.SENDER_Email,
+        to:email,
+        subject:"Reset Password",
+        text: `Click on the link to reset password http://localhost:5173/reset-password?token=${resetToken}`
+    }
+ try{
+    
+    const info= await transporter.sendMail(mailOptions);
+    
+    return res.status(200).json({message:  `A Link sent to your mail ${email} Succesfully`});
+    
+
+
+
+
+
+ }
+ catch(err)
+ {
+   return res.status(500).json({message:err.message});
+ }
+
+
+
+}
+
+export const resetPassword=async (req,res)=>{
+  
+
+    try
+    {
+   const {password,resetToken}=req.body;
+    
+   if(!password||!resetToken)
+   {
+     return res.status(400).json({message:"Details Are Insufficient"})
+   }
+
+   let hashedPassword=await bcrypt.hash(password,10);
+   
+      const details= jwt.verify(resetToken,process.env.RESET_SECRET);
+
+      if (details.purpose !== "reset password") {
+  return res.status(400).json({ message: "Invalid reset token" });
+}
+    
+   const email=details.email;
+
+   const existedUser=await User.findOne({email:email});
+   if(!existedUser)
+   {
+      return res.status(404).json({message:"User Doesnt Exist"});
+   }
+
+   const UpdatedUser=await User.findOneAndUpdate({email:email},{password:hashedPassword});
+ console.log(UpdatedUser);
+
+ return res.status(200).json({message:"Password Updated Succesfully"});
+
+   
+
+    }
+    catch(err)
+    {
+        if (err.name === "TokenExpiredError") {
+    return res.status(400).json({ message: "Reset link expired" });
+  }
+       return res.status(500).json({message:err.message});
+    }
+
+
+
+
 }
 

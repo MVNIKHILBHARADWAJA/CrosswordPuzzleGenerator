@@ -32,7 +32,7 @@ const [user, setuser] = useState({
       alert(res.data.message);
       
               setPerson(user);
-      navigate("/crossword");
+      navigate("/");
    }
    catch(err)
    {   if (err.response) {

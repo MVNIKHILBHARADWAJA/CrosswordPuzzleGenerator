@@ -68,8 +68,7 @@ const Navbar = () => {
      <nav className="navbar">
       <div className="logo" onClick={()=>{navigate("/")}}>CrosswordPuzzle</div>
       <ul className="nav-links">
-        <li><Link to="/">Home</Link></li>
-        <li><Link to="/crossword">Crossword</Link></li>
+        <li><Link to="/">Crossword</Link></li>
         {person!=null?<button onClick={logout}>logout</button>:<><li><Link to="/login">Login</Link></li>
         <li><Link to="/register">Register</Link></li></>}
         

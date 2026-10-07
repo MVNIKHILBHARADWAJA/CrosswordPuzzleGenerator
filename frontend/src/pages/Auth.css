@@ -107,3 +107,16 @@
     font-size: 0.85rem;
   }
 }
+
+.forgot-link {
+  align-self: flex-end;
+  font-size: 0.9rem;
+  color: #007bff;
+  text-decoration: none;
+  margin-top: -0.5rem;
+}
+
+.forgot-link:hover {
+  text-decoration: underline;
+}
+

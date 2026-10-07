@@ -25,7 +25,7 @@ const Login = () => {
       alert(res.data.message);
        
         setPerson(user);
-      navigate("/crossword");
+      navigate("/");
     
    }
    catch(err)
@@ -45,8 +45,10 @@ const Login = () => {
       <form onSubmit={submitHandler}>
         <input type="email" name="email" placeholder="Email" onChange={handleChange} required />
         <input type="password" name="password" placeholder="Password" onChange={handleChange} required />
+        <Link to="/forgot-password" className="forgot-link">Forgot Password?</Link>
         <button type="submit" >Login</button>
       </form>
+
       <div className="auth-links">       
           <span>Don't you have an account?<Link to="/register">Register</Link></span>
         </div>
