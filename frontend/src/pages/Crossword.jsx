@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { crosswordregeneration } from '../logic';
-import "./crossword.css";
+import "./Crossword.css";
 const Crossword = () => {
   const inputRefs = useRef([]);
   const [Language, setLanguage] = useState("english");
