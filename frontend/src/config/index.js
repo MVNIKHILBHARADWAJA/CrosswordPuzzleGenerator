@@ -1,7 +1,7 @@
 import axios from "axios";
 
  const clientServer=axios.create({
-    baseURL:"https://crosswordpuzzlegenerator.onrender.com",
+    baseURL:import.meta.env.VITE_API_URL,
     withCredentials:true,
  });
 
