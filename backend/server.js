@@ -14,7 +14,10 @@ app.use(cookieParser(`${process.env.COOKIE_PARSER_KEY}`));
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(cors({   
-    origin: "https://crossword-puzzle-generator.vercel.app", 
+    origin:[
+    "http://localhost:5173",
+    "https://crossword-puzzle-generator.vercel.app"
+  ], 
    credentials:true
 }
 ));

@@ -106,6 +106,7 @@ catch(err)
 }
 
 export const forgotPassword=async (req,res)=>{
+   
 
     const {email}=req.body;
       
@@ -144,7 +145,7 @@ export const forgotPassword=async (req,res)=>{
         from:process.env.SENDER_Email,
         to:email,
         subject:"Reset Password",
-        text: `Click on the link to reset password http://localhost:5173/reset-password?token=${resetToken}`
+        text: `Click on the link to reset password https://crossword-puzzle-generator.vercel.app/reset-password?token=${resetToken}`
     }
  try{
     
